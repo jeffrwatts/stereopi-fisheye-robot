@@ -75,7 +75,7 @@ print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
 camera = PiCamera(stereo_mode='side-by-side',stereo_decimate=False)
 camera.resolution=(cam_width, cam_height)
 camera.framerate = 20
-#camera.hflip = True
+camera.hflip = True
 
 # Initialize interface windows
 cv2.namedWindow("Image")

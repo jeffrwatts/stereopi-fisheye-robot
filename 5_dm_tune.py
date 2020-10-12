@@ -51,7 +51,7 @@ if os.path.isfile(imageToDisp) == False:
     print ("Taking photo...")
     camera = PiCamera(stereo_mode='side-by-side',stereo_decimate=False)
     camera.resolution=(photo_width, photo_height)
-    #camera.hflip = True
+    camera.hflip = True
     time.sleep(1)
     camera.capture(imageToDisp)
     print ("Done!")
