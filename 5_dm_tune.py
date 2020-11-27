@@ -72,7 +72,11 @@ except:
     exit(0)
     
 imageSize = tuple(npzfile['imageSize'])
+print(imageSize)
+print("===================")
 leftMapX = npzfile['leftMapX']
+print(leftMapX.shape)
+print("========================")
 leftMapY = npzfile['leftMapY']
 rightMapX = npzfile['rightMapX']
 rightMapY = npzfile['rightMapY']

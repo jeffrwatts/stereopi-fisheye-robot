@@ -64,7 +64,9 @@ def calibrate_cameras(object_points, left_image_points, right_image_points, imag
     if (os.path.isdir('./calibration_data')==False):
         print("Creating calibration results directory")
         os.makedirs('./calibration_data')
-                    
+            
+    print(image_dims)
+    
     # Calibrate Left Camera
     print("Calibrating Left Camera...")
     (rms_left, left_camera_matrix, 
@@ -138,14 +140,15 @@ def calibrate_cameras(object_points, left_image_points, right_image_points, imag
                                                     m1type=cv2.CV_32FC1)
     np.savez_compressed('./calibration_data/stereo_camera_calibration.npz', imageSize=image_dims,
             R=R, T=T, E=E, F=F, Q=Q, left_map_1=left_map_1, left_map_2=left_map_2,
-            right_map_1=right_map_1, right_map_2=right_map_2)
+            right_map_1=right_map_1, right_map_2=right_map_2,
+                        leftMapX=left_map_1, leftMapY=left_map_2, rightMapX=right_map_1, rightMapY=right_map_2)
     
     return left_map_1, left_map_2, right_map_1, right_map_2, Q
 
 
 image_search = './scenes/*.png'
 checker_def = (9,6,4)
-scale_ratio = 1.0
+scale_ratio = 0.5
 
 object_points, left_image_points, right_image_points, image_dims = get_corners (image_search, checker_def, scale_ratio)
 
@@ -157,7 +160,7 @@ image_filename = './scenes/scene_1280x480_1.png'
 
 image_pair = cv2.imread(image_filename, cv2.IMREAD_COLOR)
 image_pair = cv2.cvtColor(image_pair,cv2.COLOR_RGB2GRAY)
-image_left, image_right, (width, height) = split_image(image_pair)
+image_left, image_right, _ = split_image(image_pair)
 print(image_left.shape)
 
 rectified_image_left = cv2.remap(image_left, left_map_1, left_map_2, interpolation=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
